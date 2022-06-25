@@ -12,14 +12,14 @@ public class addSteps {
 	public admin admistrator;
 	public myLibrary l;
 	public book b;
-	int count;
-			//l.books.size();
 	
 	public addSteps(myLibrary ll,admin aa) {
 		l=ll;
 		admistrator=aa;
 		
 	}
+	
+
 	@Given("that the administrator is logged in")
 	public void that_the_administrator_is_logged_in() {
 		admistrator.setLogState(true);
@@ -38,7 +38,7 @@ public class addSteps {
 
 	@Then("the book with title {string}, author {string}, and signature {string} is contained in the library")
 	public void the_book_with_title_author_and_signature_is_contained_in_the_library(String string, String string2, String string3) {
-	    assertTrue(l.books.size()==count+1);
+	    assertTrue(l.books.size()==1);
 	    assertTrue( l.isContained(string,string2,string3));
 	}
 
@@ -49,7 +49,7 @@ public class addSteps {
 
 	@Then("the error message {string} is given")
 	public void the_error_message_is_given(String string) {
-		assertTrue(l.books.size()==count);
+		assertTrue(l.books.size()==0);
 	    assertEquals(string, "Administrator login required");
 	}
 
