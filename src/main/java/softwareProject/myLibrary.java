@@ -1,11 +1,17 @@
 package softwareProject;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 public class myLibrary {
 
-	ArrayList<book> books =new ArrayList<book>();
-
+	public ArrayList<book> books =new ArrayList<book>();
+	public static ArrayList<user>registeredUsers =new ArrayList<user>();
+	
+	public static Hashtable<String,ArrayList<book>>borrowed=new Hashtable<String, ArrayList<book>>();
+	book b,c,d;
+	
 	public void add(book b, admin user) {
 		// TODO Auto-generated method stub
 		if( user.getLogState()==false) {
@@ -43,10 +49,8 @@ public class myLibrary {
 		
 	}
 
-	public void print() {
-		System.out.println(books.size());
-		
-	}
+	
+	
 
 	public boolean isContained(String string, String string2, String string3) {
 		boolean found =false;

@@ -4,7 +4,7 @@ public class book {
 	String title;
 	String auther;
 	String code;
-
+	boolean borrowed;
 	public book() {
 		
 	}
@@ -12,5 +12,6 @@ public class book {
 		title=t;
 		auther=a;
 		code=c;
+		borrowed =false;
 	}
 }

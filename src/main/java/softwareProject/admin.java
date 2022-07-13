@@ -1,5 +1,7 @@
 package softwareProject;
 
+import javax.swing.JOptionPane;
+
 public class admin {
 
 	boolean logState;
@@ -39,22 +41,47 @@ public class admin {
 
 	public boolean getLogState() {
 		if(logState) {
-			System.out.println("you are logged in now ");
+			//System.out.println("you are logged in now ");
 		}
-		else
-			System.out.println("you are not logged in ");
+		//else
+			//System.out.println("you are not logged in ");
 		return logState;
 	}
 
 	public void logout() {
 		// TODO Auto-generated method stub
 		if(logState ==false ) {
-			System.out.println("you are not logged in, you should log in first to log out ");
+		//	System.out.println("you are not logged in, you should log in first to log out ");
 		}
 		else {
 			logState=false;
-			System.out.println("log out successfull");
+			//System.out.println("log out successfull");
 
+		}
+		
+	}
+	
+	
+
+	public String register(user u) {
+		
+		if(logState==false) {
+			//String s="Admin login is required";
+			JOptionPane.showInternalMessageDialog(null, "Admin login is required", "Error", JOptionPane.ERROR_MESSAGE);
+			return "Admin login is required";
+		}
+		else {
+			for(int i=0;i<myLibrary.registeredUsers.size();i++) {
+				if(u.ID.equals(myLibrary.registeredUsers.get(i).ID)) {
+					JOptionPane.showInternalMessageDialog(null, "user is alreay registered", "Error", JOptionPane.ERROR_MESSAGE);
+
+					return "user is alreay registered";
+				}
+			}
+			myLibrary.registeredUsers.add(u);
+			JOptionPane.showInternalMessageDialog(null, "user registered succefully", "success", JOptionPane.INFORMATION_MESSAGE);
+
+			return "user registered succefully";
 		}
 		
 	}
