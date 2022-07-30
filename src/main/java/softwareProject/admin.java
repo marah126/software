@@ -1,5 +1,8 @@
 package softwareProject;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 import javax.swing.JOptionPane;
 
 public class admin {
@@ -14,13 +17,13 @@ public class admin {
 	}
 	
 	public void setLogState(boolean b) {
-		// TODO Auto-generated method stub
+		
 		logState=b;
 	}
 
 	
 	public boolean login(String pass) {
-		// TODO Auto-generated method stub
+		
 		if(logState) {
 			System.out.println("you are already logged in");
 			return false;
@@ -41,48 +44,75 @@ public class admin {
 
 	public boolean getLogState() {
 		if(logState) {
-			//System.out.println("you are logged in now ");
+			
 		}
-		//else
-			//System.out.println("you are not logged in ");
+		
 		return logState;
 	}
 
 	public void logout() {
-		// TODO Auto-generated method stub
+		
 		if(logState ==false ) {
-		//	System.out.println("you are not logged in, you should log in first to log out ");
+		
 		}
 		else {
 			logState=false;
-			//System.out.println("log out successfull");
+			
 
 		}
 		
 	}
 	
-	
-
-	public String register(user u) {
-		
+	public String register(user u,myLibrary l) {
+		//myLibrary l =new myLibrary();
 		if(logState==false) {
-			//String s="Admin login is required";
+			
 			JOptionPane.showInternalMessageDialog(null, "Admin login is required", "Error", JOptionPane.ERROR_MESSAGE);
 			return "Admin login is required";
 		}
 		else {
-			for(int i=0;i<myLibrary.registeredUsers.size();i++) {
-				if(u.ID.equals(myLibrary.registeredUsers.get(i).ID)) {
+			for(int i=0;i<l.registeredUsers.size();i++) {
+				if(u.ID.equals(l.registeredUsers.get(i).ID)) {
 					JOptionPane.showInternalMessageDialog(null, "user is alreay registered", "Error", JOptionPane.ERROR_MESSAGE);
 
 					return "user is alreay registered";
 				}
 			}
-			myLibrary.registeredUsers.add(u);
+			l.registeredUsers.add(u);
 			JOptionPane.showInternalMessageDialog(null, "user registered succefully", "success", JOptionPane.INFORMATION_MESSAGE);
 
 			return "user registered succefully";
 		}
+		
+	}
+	
+	public void sendEmail(String email,String subject,String body) {
+		
+	}
+	
+	public void unregisterUser(user u,ArrayList<user>users,Hashtable<String, ArrayList<book>>bb ) {
+		if(logState==true) {
+			if(bb.containsKey(u.ID)) {
+				JOptionPane.showInternalMessageDialog(null, "can't remove this user,he has borrowed book", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if(u.countFine(30)!=0) {
+				JOptionPane.showInternalMessageDialog(null, "can't remove this user,he has unpaid fines", "Error", JOptionPane.ERROR_MESSAGE);
+
+			}
+			else {
+				for(int i=0;i<users.size();i++) {
+					if(u.ID.equals(users.get(i).ID)) {
+						users.remove(i);
+						JOptionPane.showInternalMessageDialog(null, "user unregistered succefully", "success", JOptionPane.INFORMATION_MESSAGE);
+
+					}
+				}
+			}
+		}
+		else
+			JOptionPane.showInternalMessageDialog(null, "admin login required", "Error", JOptionPane.ERROR_MESSAGE);
+
 		
 	}
 	

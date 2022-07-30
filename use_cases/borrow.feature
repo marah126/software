@@ -50,3 +50,28 @@ And there is a book with title " programming C++ " , auther " Deitel" and code "
 When the user tries to borrow this book
 Then error massage "you cant borrow this book you have borrowed maximum books" should display 
 
+Scenario: User cannot borrow books if he has late books
+Given a book with code "xyz" is in the library
+And  book with code "Beck99" is in the library
+And there is a user has ID "1234567" , name "Marah" , email " marah@gmail.com" , address "AlQuds street" ,postal code "M5M2T5" , and city "Nablus"
+When the user borrows the book with code "Beck99"
+And 21 day have passed
+And the user borrow the book with code "xyz"
+Then the book with code "xyz" is not borrowed by the user
+And  error massage "you can't borrow any new book because you have an overdue books" is given
+
+
+Scenario:  User cannot borrow books if he has fines
+Given a book with code "xyz" is in the library
+And  book with code "Beck99" is in the library
+And there is a user has ID "1234567" , name "Marah" , email " marah@gmail.com" , address "AlQuds street" ,postal code "M5M2T5" , and city "Nablus"
+When the user borrows the book with code "Beck99"
+And 21 day have passed
+Then the user has to pay fine of 30 NIS
+When the user returns the book with code "Beck99"
+Then the user has to pay fine of 30 NIS
+When the user borrow the book with code "xyz"
+Then the book with code "xyz" is not borrowed by the user
+And  error massage "you can't borrow books,you have fine to pay" is given
+
+
