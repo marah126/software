@@ -1,5 +1,7 @@
 package softwareProject;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 public class admin {
@@ -61,24 +63,22 @@ public class admin {
 		
 	}
 	
-	
-
-	public String register(user u) {
-		
+	public String register(user u,myLibrary l) {
+		//myLibrary l =new myLibrary();
 		if(logState==false) {
-			//String s="Admin login is required";
+			
 			JOptionPane.showInternalMessageDialog(null, "Admin login is required", "Error", JOptionPane.ERROR_MESSAGE);
 			return "Admin login is required";
 		}
 		else {
-			for(int i=0;i<myLibrary.registeredUsers.size();i++) {
-				if(u.ID.equals(myLibrary.registeredUsers.get(i).ID)) {
+			for(int i=0;i<l.registeredUsers.size();i++) {
+				if(u.ID.equals(l.registeredUsers.get(i).ID)) {
 					JOptionPane.showInternalMessageDialog(null, "user is alreay registered", "Error", JOptionPane.ERROR_MESSAGE);
 
 					return "user is alreay registered";
 				}
 			}
-			myLibrary.registeredUsers.add(u);
+			l.registeredUsers.add(u);
 			JOptionPane.showInternalMessageDialog(null, "user registered succefully", "success", JOptionPane.INFORMATION_MESSAGE);
 
 			return "user registered succefully";

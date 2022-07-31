@@ -11,15 +11,15 @@ public class userRegisterSteps {
 
 	public admin a;
 	public user u;
-	//public myLibrary lib;
+	public myLibrary lib;
 	
 	String s;
 	int before;
 	int after;
 	
-	public userRegisterSteps(admin aa) {
+	public userRegisterSteps(admin aa,myLibrary l) {
 		a=aa;
-		//lib=l;
+		lib=l;
 	}
 	
 	@Given("these usere are registered in the library")
@@ -35,9 +35,9 @@ public class userRegisterSteps {
 				   city=dataTable.cell(i,5);
 				   
 				   u=new user(id,name,email,add,postal,city);
-				   myLibrary.registeredUsers.add(u);
+				   lib.registeredUsers.add(u);
 		}
-			before=myLibrary.registeredUsers.size();
+			before=lib.registeredUsers.size();
 					
 	}
 
@@ -48,8 +48,8 @@ public class userRegisterSteps {
 
 	@When("admin tries to register a user")
 	public void admin_tries_to_register_a_user() {
-		s=a.register(u);
-		after=myLibrary.registeredUsers.size();
+		s=a.register(u,lib);
+		after=lib.registeredUsers.size();
 	   
 	}
 

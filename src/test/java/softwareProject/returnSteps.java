@@ -14,7 +14,9 @@ public class returnSteps {
 	public book b;
 	public myLibrary l;
 	String s;
-	
+	public returnSteps(myLibrary ll) {
+		l=ll;
+	}
 	
 	@Given("there is a user  ID {string} , name {string} , email {string} , address {string} , postal code {string} , city {string}")
 	public void there_is_a_user_id_name_email_address_postal_code_city(String id, String name, String email, String address, String postal, String city) {
@@ -24,11 +26,24 @@ public class returnSteps {
 	@Given("there is a book with title {string} , auther {string} , code {string}")
 	public void there_is_a_book_with_title_auther_code(String title, String auther, String code) {
 	    b=new book(title,auther,code);
+	    l.books.add(b);
 	}
+	
 
+	@Given("user is registered in library")
+	public void user_is_registered_in_library() {
+		l.registeredUsers.add(u);
+	}
+	
+	@Given("the user has borrowed this book")
+	public void the_user_has_borrowed_this_book() {
+	    
+	    l.borrow(b, u);
+	}
 	@When("action \\(return) happens")
 	public void action_return_happens() {
 	   s= u.returnBook(b, l);
+	   System.out.println(s);
 	}
 
 	@Then("the book not be borrowed")

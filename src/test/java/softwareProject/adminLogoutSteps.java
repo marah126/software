@@ -10,7 +10,7 @@ public class adminLogoutSteps {
 	
 	public admin a;
 	public adminLogoutSteps(admin ad) {
-		System.out.println("logout feature");
+		//System.out.println("logout feature");
 		a=ad;
 	}
 	

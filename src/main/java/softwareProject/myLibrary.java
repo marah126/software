@@ -1,16 +1,27 @@
 package softwareProject;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.Hashtable;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
+
+import java.time.Duration;
 
 public class myLibrary {
 
 	public ArrayList<book> books =new ArrayList<book>();
-	public static ArrayList<user>registeredUsers =new ArrayList<user>();
+	public  ArrayList<user>registeredUsers =new ArrayList<user>();
 	
-	public static Hashtable<String,ArrayList<book>>borrowed=new Hashtable<String, ArrayList<book>>();
+	public  Hashtable<String,ArrayList<book>>borrowed=new Hashtable<String, ArrayList<book>>();
 	book b,c,d;
+	int  fine;
+	
+	DateServer date=new DateServer();
 	
 	public void add(book b, admin user) {
 		// TODO Auto-generated method stub
@@ -64,5 +75,72 @@ public class myLibrary {
 		return found;
 					
 	}
-
+	
+	public void setFine(int x) {
+		
+		fine=x;
+	}
+	
+	public  int getFine() {
+		return fine;
+	}
+	
+	public boolean checkUser(user u) {
+		//boolean f=false;
+		for (int i=0;i<registeredUsers.size();i++) {
+			if (registeredUsers.get(i).ID.equals(u.ID)) {
+				//f=true;
+				return true;
+			}
+		}
+		
+			JOptionPane.showInternalMessageDialog(null, "This user is not registered", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		
+	}
+	
+	public boolean borrow(book b,user u) {
+		
+		boolean f=checkUser(u);
+		if(f) {
+			f=lateBooks(u, 21);
+			if(f==false) {
+				if(u.countFine(getFine())!=0) {
+					JOptionPane.showInternalMessageDialog(null, "Cant borrow book,you have fines", "Error", JOptionPane.ERROR_MESSAGE);
+					return false;
+					}
+				f=u.borrow(b, books,borrowed);
+				return f;
+			}
+			else return false;
+		}
+		
+		else {	
+			return f;
+		}
+	}
+	
+	
+	
+	public boolean lateBooks(user u,int day) {
+		LocalDate today=date.getDate();
+		Duration diff;
+		long difference;
+		ArrayList<book>x=new ArrayList<book>();
+		if(borrowed.containsKey(u.ID)) {
+			x=borrowed.get(u.ID);
+			for(int i=0;i<x.size();i++) {
+				diff=Duration.between( x.get(i).borrowingDate.atStartOfDay(),today.atStartOfDay());
+				difference=diff.toDays();
+				
+				if(difference ==day || difference > day) {
+					u.lateBooks++;
+					return true;
+				}
+			}
+		}
+		return false;
+		
+	}
+ 
 }
